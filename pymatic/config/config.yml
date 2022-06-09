@@ -1,0 +1,17 @@
+# By default, the latest full release (ex: 1.18, as 1.18.2 doesn't have new blocks or items)
+# Used for creating new schematics, more info at https://minecraft.fandom.com/wiki/Data_version
+mc_version: 2860
+
+# Litematica compatibility version, 5, 6 are supported
+# Generally, version 6 only affects scheduled ticks, but parser doesn't support those so don't worry about it
+litematica_version: 5
+
+# When more than 0 certain validation checks are disabled, may make the parser faster, but may also cause issues
+# Planned values:
+# 0 - all checks enabled
+# 1 - checks for data and type enabled
+# 2 - checks for type enabled
+# 3 - checks disabled
+i_know_what_i_am_doing: 0
+
+read_only: false
