@@ -12,4 +12,4 @@ class Container:
     def rec_inv(self):
         if CONFIG.read_only:
             return self._rec
-        return NotImplemented
+        return [i.rec_inv for i in self.inventory].extend(self.inventory)
