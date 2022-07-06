@@ -1,9 +1,9 @@
 from attrs import define
 from nbtlib import Compound
 
-from pymatic.litematic.region import LitematicRegion
-from pymatic.storage.nbt_object import NBTObject
-from pymatic.storage.structure import Structure
+from pymatic.litematic.litematic_region import LitematicRegion
+from pymatic.common.nbt_object import NBTObject
+from pymatic.common.structure import Structure
 
 
 @define

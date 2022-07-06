@@ -4,9 +4,9 @@ from attrs import define
 from nbtlib import String, Int, Long, Compound
 
 from pymatic.config import CONFIG
-from pymatic.storage.metadata import Metadata
-from pymatic.storage.nbt_object import NBTObject
-from pymatic.storage.structure import Structure
+from pymatic.common.metadata import Metadata
+from pymatic.common.nbt_object import NBTObject
+from pymatic.common.structure import Structure
 from pymatic.utils.vec3d import Vec3d
 
 

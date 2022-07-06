@@ -2,8 +2,8 @@ from abc import ABC
 
 from attrs import define, field
 
-from pymatic.storage.nbt_object import NBTObject
-from pymatic.storage.block_state_array import BlockStateArray
+from pymatic.common.nbt_object import NBTObject
+from pymatic.common.block_state_array import BlockStateArray
 from pymatic.utils.vec3d import Vec3d
 
 

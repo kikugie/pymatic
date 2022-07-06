@@ -9,6 +9,9 @@ from pymatic.config import STACK_SIZES, NAMES
 
 @define
 class Item:
+    """
+    Item type properties
+    """
     id: str
     stack_size: int
     name: str = field(default=None)

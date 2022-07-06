@@ -1,8 +1,8 @@
 from nbtlib import Compound
 
-from pymatic.litematic.block_state_array import LitematicBlockStateArray
-from pymatic.storage.nbt_object import NBTObject
-from pymatic.storage.region import Region
+from pymatic.litematic.litematic_block_state_array import LitematicBlockStateArray
+from pymatic.common.nbt_object import NBTObject
+from pymatic.common.region import Region
 from pymatic.utils.vec3d import Vec3d
 
 
@@ -17,7 +17,8 @@ class LitematicRegion(Region, NBTObject):
         return tmp
 
     def to_nbt(self, *args, **kwargs) -> Compound:
-        pass
+        self.nbt.update(self.block_data.to_nbt())
+        # TODO: write other values
 
     def validate(self, *args, **kwargs) -> bool:
         pass

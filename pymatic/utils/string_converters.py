@@ -1,15 +1,4 @@
 # Warning boilerplate code
-def conv_str(value):
-    if value.isdigit():
-        return int(value)
-    elif value.lower() == 'true':
-        return True
-    elif value.lower() == 'false':
-        return False
-    else:
-        return value
-
-
 def to_str(value):
     if isinstance(value, bool):
         return str(value).lower()
@@ -17,3 +6,14 @@ def to_str(value):
         return str(value)
     else:
         return value
+
+
+def parse_str(s: str, /):
+    if s.isdigit():
+        return int(s)
+    elif s.lower() == 'true':
+        return True
+    elif s.lower() == 'false':
+        return False
+    else:
+        return str(s)

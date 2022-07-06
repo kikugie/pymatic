@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from pymatic.storage.structure import Structure
+from pymatic.common.structure import Structure
 
 
 class Metadata(ABC):
