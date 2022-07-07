@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from attrs import define
 from nbtlib import Array
 
+from pymatic.common.block_state import BlockState
 from pymatic.common.nbt_object import NBTObject
 
 
@@ -46,7 +47,7 @@ class BlockStateArray(NBTObject, ABC):
 
     def __iter__(self):
         for i in range(self.length):
-            yield i
+            yield BlockStateLink(self, i)
 
     def __delitem__(self, key: int):
         self[key] = 0
@@ -57,7 +58,25 @@ class BlockStateArray(NBTObject, ABC):
                 return True
         return False
 
+    def __len__(self):
+        return self.length
+
     def __key_check(self, key):
         if not -self.length <= key < self.length:
             raise IndexError(f'Index {key} out of bounds!')
         return True
+
+
+@define
+class BlockStateLink:
+    block_data: BlockStateArray
+    index: int
+
+    def get(self) -> int:
+        return self.block_data[self.index]
+
+    def set(self, value: int):
+        self.block_data[self.index] = value
+
+    def get_palette(self) -> BlockState:
+        return self.block_data.palette[self.get()]
