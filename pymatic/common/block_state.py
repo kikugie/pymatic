@@ -1,4 +1,4 @@
-from attrs import define
+from attrs import define, field
 from nbtlib.tag import Compound, String
 
 from pymatic.common.nbt_object import NBTObject
@@ -8,7 +8,7 @@ from pymatic.utils.string_converters import *
 @define(kw_only=True)
 class BlockState(NBTObject):
     name: str
-    properties: dict
+    properties: dict = field(factory=dict)
 
     @classmethod
     def from_nbt(cls, nbt: Compound) -> 'BlockState':

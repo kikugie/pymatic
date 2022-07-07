@@ -13,12 +13,11 @@ class LitematicBlockStateArray(BlockStateArray):
     _bit_span: int = field(default=None, init=False)  # Amount of bits each entry takes
     _mask: int = field(default=None, init=False)  # 'bit_span' amount of first bits set to 1
 
-    __full_mask = 0b1111111111111111111111111111111111111111111111111111111111111111
-    __end_mask = 0b1000000000000000000000000000000000000000000000000000000000000000
+    __full_mask = (1 << 64) - 1
+    __end_mask = 1 << 63
 
     def __attrs_post_init__(self):
-        self._bit_span = int.bit_length(len(self.palette) - 1)
-        self._mask = (1 << self._bit_span) - 1
+        self.update()
         self.block_states = [int(i) & self.__full_mask for i in self.block_states]
 
     def __array_setup(self, index: int) -> (int, int, int):
@@ -27,6 +26,10 @@ class LitematicBlockStateArray(BlockStateArray):
         start_bit_offset = start_offset & 0x3F  # offset in the selected value
         entry_end = start_offset % 64 + self._bit_span  # where palette index will end
         return start_array, start_bit_offset, entry_end
+
+    def update(self):
+        self._bit_span = int.bit_length(len(self.palette) - 1)
+        self._mask = (1 << self._bit_span) - 1
 
     def get(self, index: int, /) -> int:
         start_array, entry_start, entry_end = self.__array_setup(index)

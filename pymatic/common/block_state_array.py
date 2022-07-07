@@ -27,6 +27,10 @@ class BlockStateArray(NBTObject, ABC):
     def set(self, index: int, value: int, /):
         ...
 
+    @abstractmethod
+    def update(self):
+        ...
+
     def block_iterator(self, iter_range: range = None, /):
         if iter_range is None:
             iter_range = range(self.length)
