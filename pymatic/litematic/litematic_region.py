@@ -19,6 +19,7 @@ class LitematicRegion(Region, NBTObject):
     def to_nbt(self, *args, **kwargs) -> Compound:
         self.nbt.update(self.block_data.to_nbt())
         # TODO: write other values
+        return self.nbt
 
     def validate(self, *args, **kwargs) -> bool:
         pass

@@ -16,7 +16,11 @@ class Litematic(Structure, NBTObject):
         )
 
     def to_nbt(self) -> Compound:
-        pass
+        self.nbt.update(Compound({
+            k: v.to_nbt() for k, v in self.regions.items()
+        }))
+
+        return self.nbt
 
     def validate(self, *args, **kwargs) -> bool:
         pass

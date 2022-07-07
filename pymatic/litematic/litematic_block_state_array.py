@@ -35,12 +35,14 @@ class LitematicBlockStateArray(BlockStateArray):
         # entry_end - position where reading will end
 
         if entry_end < 64:
-            return self.block_states[start_array] >> entry_start & self._mask
+            out = self.block_states[start_array] >> entry_start & self._mask
             # Shift Long to the point where reading starts, zero all bits after entry end
         else:
-            return (self.block_states[start_array] >> entry_start | self.block_states[
+            out = (self.block_states[start_array] >> entry_start | self.block_states[
                 start_array + 1] << 64 - entry_start) & self._mask
             # Combine values from 2 Longs
+
+        return out
 
     def set(self, index: int, value: int, /):
         start_array, entry_start, entry_end = self.__array_setup(index)
@@ -51,10 +53,11 @@ class LitematicBlockStateArray(BlockStateArray):
 
         if entry_end >= 64:
             self.block_states[start_array] &= self.__full_mask  # Chop off exceeding bits
-            shift = 64 - entry_start
-            self.block_states[start_array + 1] &= ~self._mask >> shift | value >> shift
-            # self.block_states[start_array + 1] & ~self._mask >> shift : Zero remaining bits for the value
-            # ... | value >> shift : Insert remaining bits
+
+            end_offset = 64 - entry_start
+            shift = self._bit_span - end_offset
+            self.block_states[start_array + 1] = (self.block_states[start_array + 1] >> shift << shift | (
+                        value & self._mask) >> end_offset) & self.__full_mask
 
     @classmethod
     def from_nbt(cls, nbt: Compound) -> 'LitematicBlockStateArray':

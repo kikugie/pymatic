@@ -26,4 +26,4 @@ class Structure(NBTObject, ABC):
         return tmp
 
     def to_file(self, filename: str = None, gzipped: bool = None):
-        File(self.nbt).save(filename, gzipped=gzipped)
+        File(self.to_nbt()).save(filename, gzipped=gzipped)
