@@ -25,7 +25,7 @@ class ItemStack(NBTObject, Container):
         return self._origin
 
     @classmethod
-    def from_nbt(cls, nbt: Compound) -> 'ItemStack':
+    def from_nbt(cls, nbt: Compound | dict) -> 'ItemStack':
         return ItemStack(
             nbt=nbt,
             item=Item[nbt['id']],

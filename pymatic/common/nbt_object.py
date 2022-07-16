@@ -1,5 +1,6 @@
 import logging
 from abc import ABC, abstractmethod
+
 from attrs import define, field, fields
 from nbtlib import Compound
 
@@ -15,7 +16,7 @@ class NBTObject(ABC):
 
     @classmethod
     @abstractmethod
-    def from_nbt(cls, nbt: Compound) -> 'NBTObject':
+    def from_nbt(cls, nbt: Compound | dict) -> 'NBTObject':
         """
         Parses nbtlib Compound into an object.
         """

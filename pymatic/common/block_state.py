@@ -11,7 +11,7 @@ class BlockState(NBTObject):
     properties: dict = field(factory=dict)
 
     @classmethod
-    def from_nbt(cls, nbt: Compound) -> 'BlockState':
+    def from_nbt(cls, nbt: Compound | dict) -> 'BlockState':
         return BlockState(
             nbt=nbt,
             name=str(nbt['Name']),
