@@ -2,7 +2,7 @@ import os
 
 from pymatic.common.structure import Structure
 from pymatic.errors import FileException
-from pymatic.litematic import Litematic
+from pymatic.litematic.litematic import Litematic
 
 
 class NBTFile:

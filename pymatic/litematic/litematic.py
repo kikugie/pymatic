@@ -1,6 +1,7 @@
 from attrs import define
 from nbtlib import Compound
 
+from pymatic.common.region import RegionDict
 from pymatic.litematic.litematic_region import LitematicRegion
 from pymatic.common.nbt_object import NBTObject
 from pymatic.common.structure import Structure
@@ -12,7 +13,7 @@ class Litematic(Structure, NBTObject):
     def from_nbt(cls, nbt: Compound) -> 'Litematic':
         return Litematic(
             nbt=nbt,
-            regions={k: LitematicRegion.from_nbt(v) for k, v in nbt['Regions'].items()}
+            regions=RegionDict({k: LitematicRegion.from_nbt(v) for k, v in nbt['Regions'].items()})
         )
 
     def to_nbt(self) -> Compound:

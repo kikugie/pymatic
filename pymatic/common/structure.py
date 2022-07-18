@@ -4,7 +4,7 @@ from abc import ABC
 from attrs import define, field
 from nbtlib import load, File
 
-from pymatic.common.region import Region
+from pymatic.common.region import Region, RegionDict
 from pymatic.common.nbt_object import NBTObject
 
 
@@ -14,7 +14,7 @@ class Structure(NBTObject, ABC):
     filetype: str = field(default=None)
 
     # metadata: MetaData = field(default=None)
-    regions: dict[str, Region] = field(factory=dict)
+    regions: RegionDict[Region] = field(factory=RegionDict)
 
     @classmethod
     def from_file(cls, file_path: str, gzipped: bool = None):
