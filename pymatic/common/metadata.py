@@ -1,3 +1,7 @@
+"""
+W.I.P. Metadata editing
+"""
+
 from abc import ABC, abstractmethod
 
 from pymatic.common.structure import Structure

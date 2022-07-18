@@ -11,8 +11,8 @@ from pymatic.common.nbt_object import NBTObject
 @define(kw_only=True)
 class ItemStack(NBTObject, Container):
     item: Item
-    count: int
-    slot: int = field(default=-1)
+    count: int = field(converter=int)
+    slot: int = field(converter=int, default=-1)
 
     _origin: Container = field(default=None)
 
@@ -29,12 +29,12 @@ class ItemStack(NBTObject, Container):
         return ItemStack(
             nbt=nbt,
             item=Item[nbt['id']],
-            count=int(nbt['Count']),
-            slot=int(nbt.get('Slot', None))
+            count=nbt['Count'],
+            slot=nbt.get('Slot', None)
         )
 
     def to_nbt(self) -> Compound:
-        self.validate()
+        # self.validate()
 
         self.nbt.update(Compound({
             'id': String(self.name),

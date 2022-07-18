@@ -31,6 +31,7 @@ class NBTObject(ABC):
 
     @abstractmethod
     def validate(self) -> bool:
+        # TODO: Validation mechanics
         """
         Validates the object.
         """
@@ -38,12 +39,14 @@ class NBTObject(ABC):
 
     def _type_validation(self) -> bool:
         # noinspection PyDataclass
+        # Mb there's a better day
         for att in fields(self.__class__):
             if not (att.name.startswith('_') or isinstance(t := getattr(self, att.name), att.type)):
                 logging.error(f"Incorrect attribute type for '{att.name}' at {self}.")
                 raise TypeError(f"Unexpected type {type(t)} for attribute '{att.name}'. Expected {att.type}.")
         return True
 
-    def _write_validation(self):
+    @staticmethod
+    def _write_validation():
         if CONFIG.read_only:
             raise Exception(f'Unable to write')

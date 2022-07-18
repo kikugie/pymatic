@@ -32,6 +32,7 @@ class BlockStateArray(NBTObject, ABC):
         ...
 
     def block_iterator(self, iter_range: range = None, /):
+        # TODO: Write iteration algorithm
         if iter_range is None:
             iter_range = range(self.length)
         for i in iter_range:

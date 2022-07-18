@@ -6,12 +6,4 @@ mc_version: 2860
 # Generally, version 6 only affects scheduled ticks, but parser doesn't support those so don't worry about it
 litematica_version: 5
 
-# When more than 0 certain validation checks are disabled, may make the parser faster, but may also cause issues
-# Planned values:
-# 0 - all checks enabled
-# 1 - checks for data and type enabled
-# 2 - checks for type enabled
-# 3 - checks disabled
-i_know_what_i_am_doing: 0
-
 read_only: false

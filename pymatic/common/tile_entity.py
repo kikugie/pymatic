@@ -1,3 +1,7 @@
+"""
+Not finished yet
+"""
+
 from attrs import define, field
 from nbtlib import Compound
 
@@ -16,6 +20,8 @@ class TileEntity(NBTObject):
     def from_nbt(cls, nbt: Compound | dict) -> 'TileEntity':
         if 'Items' in nbt:
             return ContainerTileEntity.from_nbt(nbt)
+        if 'Text1' in nbt:
+            return SignTileEntity.from_nbt(nbt)
         return TileEntity(
             nbt=nbt,
             pos=Vec3d(int(nbt['x']), int(nbt['y']), int(nbt['z']))
@@ -41,5 +47,24 @@ class ContainerTileEntity(TileEntity, Container):
         )
 
 
-a = {'Items': [], 'x': 0, 'y': 0, 'z': 0}
-b = TileEntity.from_nbt(a)
+@define(kw_only=True)
+class SignTileEntity(TileEntity):
+    text: list = field(factory=list)
+    color: str = field(default='black')
+    glowing: bool = field(default=False)
+
+    @classmethod
+    def from_nbt(cls, nbt: Compound | dict) -> 'SignTileEntity':
+        return SignTileEntity(
+            nbt=nbt,
+            pos=Vec3d(int(nbt['x']), int(nbt['y']), int(nbt['z'])),
+            text=[str(nbt[f'Text{i}']) for i in range(1, 5)],
+            color=str(nbt['Color']),
+            glowing=bool(nbt['GlowingText'])
+        )
+
+    def to_nbt(self) -> Compound:
+        pass
+
+    def validate(self) -> bool:
+        pass

@@ -7,19 +7,19 @@ from pymatic.utils.string_converters import *
 
 @define(kw_only=True)
 class BlockState(NBTObject):
-    name: str
+    name: str = field(converter=str)
     properties: dict = field(factory=dict)
 
     @classmethod
     def from_nbt(cls, nbt: Compound | dict) -> 'BlockState':
         return BlockState(
             nbt=nbt,
-            name=str(nbt['Name']),
+            name=nbt['Name'],
             properties={k: parse_str(v) for k, v in nbt.get('Properties', {}).items()}
         )
 
     def to_nbt(self) -> Compound:
-        self.validate()
+        # self.validate()
 
         self.nbt.update(Compound({
             'Name': String(self.name),
@@ -30,4 +30,4 @@ class BlockState(NBTObject):
         return self.nbt
 
     def validate(self) -> bool:
-        return self._type_validation()
+        ...

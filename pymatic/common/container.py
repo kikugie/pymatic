@@ -12,4 +12,5 @@ class Container:
     def rec_inv(self):
         if CONFIG.read_only:
             return self._rec
+        # TODO: Recursive inventory
         return [i.rec_inv for i in self.inventory].extend(self.inventory)
