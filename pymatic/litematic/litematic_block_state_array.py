@@ -37,7 +37,7 @@ class LitematicBlockStateArray(BlockStateArray):
         # entry_start - position in the selected Long to start reading from
         # entry_end - position where reading will end
 
-        if entry_end < 64:
+        if entry_end <= 64:
             out = self.block_states[start_array] >> entry_start & self._mask
             # Shift Long to the point where reading starts, zero all bits after entry end
         else:
@@ -54,7 +54,7 @@ class LitematicBlockStateArray(BlockStateArray):
         updated = zeroed | (value & self._mask) << entry_start
         self.block_states[start_array] = updated & self.__full_mask
 
-        if entry_end >= 64:
+        if entry_end > 64:
             self.block_states[start_array] &= self.__full_mask  # Chop off exceeding bits
 
             end_offset = 64 - entry_start

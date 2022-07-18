@@ -6,6 +6,20 @@ from nbtlib import Array
 from pymatic.common.block_state import BlockState
 from pymatic.common.nbt_object import NBTObject
 
+@define
+class BlockStateLink:
+    block_data: 'BlockStateArray'
+    index: int
+
+    def get(self) -> int:
+        return self.block_data[self.index]
+
+    def set(self, value: int):
+        self.block_data[self.index] = value
+
+    def get_palette(self) -> BlockState:
+        return self.block_data.palette[self.get()]
+
 
 @define(kw_only=True)
 class BlockStateArray(NBTObject, ABC):
@@ -50,38 +64,23 @@ class BlockStateArray(NBTObject, ABC):
             return self.get(key) if key >= 0 else self.get(self.length + key)
         return [self[k] for k in range(self.length)[key]]
 
-    def __iter__(self):
+    def __iter__(self) -> BlockStateLink:
         for i in range(self.length):
             yield BlockStateLink(self, i)
 
     def __delitem__(self, key: int):
         self[key] = 0
 
-    def __contains__(self, value: int):
+    def __contains__(self, value: int) -> bool:
         for i in self.block_iterator():
             if i == value:
                 return True
         return False
 
-    def __len__(self):
+    def __len__(self) -> int:
         return self.length
 
     def __key_check(self, key):
         if not -self.length <= key < self.length:
             raise IndexError(f'Index {key} out of bounds!')
         return True
-
-
-@define
-class BlockStateLink:
-    block_data: BlockStateArray
-    index: int
-
-    def get(self) -> int:
-        return self.block_data[self.index]
-
-    def set(self, value: int):
-        self.block_data[self.index] = value
-
-    def get_palette(self) -> BlockState:
-        return self.block_data.palette[self.get()]
